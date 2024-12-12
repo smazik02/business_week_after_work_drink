@@ -1,0 +1,706 @@
+package com.sample
+
+import com.sample.DroolsTest.*;
+
+declare Question
+	content : String
+	answer : String
+end
+
+rule "init"
+	when
+	then
+		Question question = new Question();
+
+		question.setContent("Who are you going out for drinks with?");
+		String[] possible = {"Your boss", "A colleague", "A group", "A client or business contact"};
+
+		String selectedValue=QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "didBossAskForDrinks"
+	when
+		Question(content == "Who are you going out for drinks with?", answer == "Your boss")
+	then
+		Question question = new Question();
+		question.setContent("Did he or she ask you to drinks?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "celebratingSomething"
+	when
+		Question(content == "Did he or she ask you to drinks?", answer == "Yes")
+	then
+		Question question = new Question();
+		question.setContent("Are you celebrating something?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "worriedInTrouble"
+	when
+		Question(content == "Are you celebrating something?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Are you worried you're in trouble?");
+
+		
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "willYouTalkBack"
+	when
+		Question(content == "Are you worried you're in trouble?", answer == "Yes")
+	then
+		Question question = new Question();
+		question.setContent("Will you talk back?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "tryingToSleepWithYou"
+	when
+        Question(content == "Are you worried you're in trouble?", answer == "No") or
+        Question(content == "Are you trying to seduce your boss?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Is he or she trying to sleep with you?");
+		
+		String[] possible = {"Yes", "No"};
+
+		String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "askingForARaise"
+	when
+		Question(content == "Did he or she ask you to drinks?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Are you asking for a raise?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "justAPromotion"
+	when
+		Question(content == "Are you asking for a raise?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Just a promotion?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "seduceYourBoss"
+	when
+		Question(content == "Just a promotion?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Are you trying to seduce your boss?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "isThisAGoodIdea"
+	when
+		Question(content == "Are you trying to seduce your boss?", answer == "Yes")
+	then
+		Question question = new Question();
+		question.setContent("Are you sure this is a good idea?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "officialFunction"
+	when
+		Question(content == "Who are you going out for drinks with?", answer == "A group")
+	then
+		Question question = new Question();
+		question.setContent("Is it an official function?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "youLikeThesePeople"
+	when
+		Question(content == "Is it an official function?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Do you like these people?");
+
+		String[] possible = {"No", "Eh"};
+
+		String selectedValue=QuestionFrame.displayQuestion(possible,question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "writeThisOff"
+	when
+		Question(content == "Do you like these people?", answer == "Eh")
+	then
+		Question question = new Question();
+		question.setContent("Can you write this off?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "anOfficialFunction"
+	when
+		Question(content == "Is it an official function?", answer == "Yes")
+	then
+		Question question = new Question();
+		question.setContent("It's a...");
+
+		String[] possible = {"performance reward", "holiday party", "going-away party"};
+		possible[0]="performance reward";
+		possible[1]="holiday party";
+		possible[2]="going-away party";
+
+		String selectedValue=QuestionFrame.displayQuestion(possible,question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "doYouLikeThisPerson"
+	when
+		Question(content == "It's a...", answer == "going-away party")
+	then
+		Question question = new Question();
+		question.setContent("Do you like this person?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "majorCelebration"
+	when
+		Question(content == "It's a...", answer == "performance reward")
+	then
+		Question question = new Question();
+		question.setContent("Is this a major celebration?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "getWasted"
+	when
+		Question(content == "It's a ...", answer == "holiday party") or
+		Question(content == "Is this a major celebration?", answer == "Yes")
+	then
+		Question question = new Question();
+		question.setContent("Can you comfortably get wasted?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "fridayNight"
+	when
+		Question(content == "Can you comfortably get wasted?", answer == "Yes")
+	then
+		Question question = new Question();
+		question.setContent("Is it a Friday night?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "workingHereLongTime"
+	when
+		Question(content == "Is it a Friday night?", answer == "No")
+	then
+		Question question = new Question();
+		question.setContent("Are you planning on working here for a long time?");
+
+		String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+		question.setAnswer(selectedValue);
+		insert(question);
+end
+
+
+rule "collegueWhy"
+	when
+        Question(content == "Who are you going out for drinks with?", answer == "A colleague")
+	then
+        Question question = new Question();
+        question.setContent("Why?");
+
+        String[] possible = {"To gripe about work", "To ask for advice", "To give advice"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "expenseAsWorkDrinks"
+    when
+        Question(content == "Why?", answer == "To gripe about work")
+    then
+        Question question = new Question();
+        question.setContent("Can this be expensed as work drinks?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "isCompanionMale"
+    when
+        Question(content == "Can this be expensed as work drinks?", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Is your companion male?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "isGirlsNight"
+    when
+        Question(content == "Is your companion male?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Is this a girl's night?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "areYouGettingFired"
+    when
+        Question(content == "Why?", answer == "To ask for advice")
+    then
+        Question question = new Question();
+        question.setContent("Are you about to get fired?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "promotionScheming"
+    when
+        Question(content == "Are you about to get fired?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Just scheming for a promotion?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "canHeHelp"
+    when
+        Question(content == "Just scheming for a promotion?", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Can this person help you?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "bitchfest"
+    when
+        Question(content == "Just scheming for a promotion?", answer == "No") or
+        Question(content == "Can this person help you?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Will this morph into a bitchfest?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "inviteOut"
+    when
+        Question(content == "Why?", answer == "To give advice")
+    then
+        Question question = new Question();
+        question.setContent("Did he or she invite you out?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "handleTruth"
+    when
+        Question(content == "Did he or she invite you out?", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Can this person handle the truth?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "performanceWarning"
+    when
+        Question(content == "Did he or she invite you out?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Is this a performance warning?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "crier"
+    when
+        Question(content == "Can this person handle the truth?", answer == "No") or
+        Question(content == "Is this a performance warning", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Is he or she a crier?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+
+rule "closeToADeal"
+	when
+        Question(content == "Who are you going out for drinks with?", answer == "A client or business contact")
+	then
+        Question question = new Question();
+        question.setContent("Why? You're trying to close a deal...");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "expenseAccount"
+    when
+        Question(content == "Why? You're trying to close a deal...", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Is your expense account big?");;
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "takeToDinner"
+    when
+        Question(content == "Is your expense account big?", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Do you have to take them to dinner after?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "someoneRadar"
+    when
+        Question(content == "Why? You're trying to close a deal...", answer == "No") or
+        Question(content == "Do you like this person?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Are you schmoozing to stay on this person's radar?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "drinker"
+    when
+        Question(content == "Are you schmoozing to stay on this person's radar?", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Is he or she a big drinker?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "obligationToKeepUp"
+    when
+        Question(content == "Is he or she a big drinker?", answer == "Yes")
+    then
+        Question question = new Question();
+        question.setContent("Do you feel obligated to keep up with this person?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "mormon"
+    when
+        Question(content == "Is he or she a big drinker?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Are they Mormon?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "noLifeLie"
+    when
+        Question(content == "Is he or she a big drinker?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Are they Mormon?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "life"
+    when
+        Question(content == "Are you schmoozing to stay on this person's radar?", answer == "No")
+    then
+        Question question = new Question();
+        question.setContent("Do you have a life?");
+
+        String[] possible = {"Yes", "No"};
+
+        String selectedValue = QuestionFrame.displayQuestion(possible, question.getContent());
+        question.setAnswer(selectedValue);
+        insert(question);
+end
+
+rule "notInTheOffice"
+	when
+		Question(content == "Are you asking for a raise?", answer == "Yes") or
+		Question(content == "Just a promotion?", answer == "Yes")
+	then
+		QuestionFrame.displaySummary("STOP\nDo this in the office");
+end
+
+rule "lifeNotLying"
+    when
+        Question(content == "Do you have a life?", answer == "No")
+    then
+        QuestionFrame.displaySummary("STOP\nGet a life");
+end
+
+rule "lifeLying"
+    when
+        Question(content == "Do you have a life?", answer == "Yes")
+    then
+    	QuestionFrame.displaySummary("You aren't being honest. Try again");
+        QuestionFrame.displaySummary("STOP\nGet a life");
+end
+
+rule "FancyCocktail"
+    when
+        Question(content == "Are you sure this is a good idea?", answer == "Yes") or
+        Question(content == "Is this a girl's night?", answer == "Yes") or
+        Question(content == "Do you like these people?", answer == "No") or
+       	Question(content == "Is he or she a crier?", answer == "No") or
+        Question(content == "Is your expense account big?", answer == "No") or
+        Question(content == "Do you feel obligated to keep up with this person?", answer == "No")
+    then
+        QuestionFrame.displaySummary("You should get a Fancy Cocktail!");
+end
+
+
+rule "Martini"
+    when
+        Question(content == "Are you sure this is a good idea?", answer == "No") or
+        Question(content == "Are you planning on working here for a long time?", answer == "No") or
+        Question(content == "Is it a Friday night?", answer == "Yes") or
+        Question(content == "Are you about to get fired?", answer == "Yes") or
+        Question(content == "Is he or she a crier?", answer == "Yes") or
+        Question(content == "Do you have to take them to dinner after?", answer == "Yes")
+    then
+        QuestionFrame.displaySummary("You should get Martini!");
+end
+
+
+rule "Wine"
+    when
+        Question(content == "Is he or she trying to sleep with you?", answer == "No") or
+        Question(content == "Will you talk back?", answer == "No") or
+        Question(content == "Can you comfortably get wasted?", answer == "No") or
+        Question(content == "Can this person help you?", answer == "Yes") or
+        Question(content == "Can this person handle the truth?", answer == "Yes") or
+        Question(content == "Are they Mormon?", answer == "No")
+    then
+        QuestionFrame.displaySummary("You should get Martini!");
+end
+
+rule "Beer"
+    when
+        Question(content == "Is this a girls' night?", answer == "No") or
+        Question(content == "Can this be expensed as work drinks?", answer == "No") or
+        Question(content == "Can you write this off?", answer == "No") or
+        Question(content == "Will this morph into a bitchfest?", answer == "Yes")
+    then
+        QuestionFrame.displaySummary("You should get a beer!");
+end
+
+rule "Bubbly"
+    when
+        Question(content == "Are you celebrating something?", answer == "Yes") or
+        Question(content == "Are you planning on working here for a long time?", answer == "Yes") or
+        Question(content == "Do you like this person?", answer == "Yes")
+    then
+        QuestionFrame.displaySummary("You should get a bubbly drink!");
+end
+
+
+rule "Highball"
+    when
+        Question(content == "Will this morph into into a bitchfest?", answer == "No") or
+        Question(content == "Do you feel obligated to keep up with this person?", answer == "Yes") or
+        Question(content == "Is it a major celebration?", answer == "No")
+    then
+        QuestionFrame.displaySummary("You should get a Highball!");
+end
+
+
+rule "Lowball"
+    when
+        Question(content == "Is your companion male?", answer == "Yes") or
+        Question(content == "Is this a performance warning?", answer == "No") or
+        Question(content == "Can you write this off?", answer == "Yes")
+    then
+        QuestionFrame.displaySummary("You should get a Lowball!");
+end
+
+
+rule "Non-alcoholic"
+    when
+        Question(content == "Will you talk back?", answer == "Yes") or
+        Question(content == "Is he or she trying to sleep with you?", answer == "Yes") or
+        Question(content == "Are they Mormon?", answer == "Yes")
+    then
+        QuestionFrame.displaySummary("You should get a Non-alcoholic!");
+end
