@@ -19,7 +19,7 @@
     <org.drools.core.audit.event.ObjectLogEvent>
       <type>1</type>
       <factId>1</factId>
-      <objectToString>Question( content=Who are you going out for drinks with?, answer=null )</objectToString>
+      <objectToString>Question( content=Who are you going out for drinks with?, answer=  )</objectToString>
     </org.drools.core.audit.event.ObjectLogEvent>
     <org.drools.core.audit.event.ActivationLogEvent>
       <type>7</type>
@@ -27,6 +27,32 @@
       <rule>init</rule>
       <declarations></declarations>
       <factHandleIds>0</factHandleIds>
+    </org.drools.core.audit.event.ActivationLogEvent>
+    <org.drools.core.audit.event.ActivationLogEvent>
+      <type>4</type>
+      <activationId>askDrinks [1]</activationId>
+      <rule>askDrinks</rule>
+      <declarations>$question=Question( content=Who are you going out for drinks with?, answer=  )</declarations>
+      <factHandleIds>1</factHandleIds>
+    </org.drools.core.audit.event.ActivationLogEvent>
+    <org.drools.core.audit.event.ActivationLogEvent>
+      <type>6</type>
+      <activationId>askDrinks [1]</activationId>
+      <rule>askDrinks</rule>
+      <declarations>$question=Question( content=Who are you going out for drinks with?, answer=  )</declarations>
+      <factHandleIds>1</factHandleIds>
+    </org.drools.core.audit.event.ActivationLogEvent>
+    <org.drools.core.audit.event.ObjectLogEvent>
+      <type>2</type>
+      <factId>1</factId>
+      <objectToString>Question( content=Who are you going out for drinks with?, answer=null )</objectToString>
+    </org.drools.core.audit.event.ObjectLogEvent>
+    <org.drools.core.audit.event.ActivationLogEvent>
+      <type>7</type>
+      <activationId>askDrinks [1]</activationId>
+      <rule>askDrinks</rule>
+      <declarations>$question=Question( content=Who are you going out for drinks with?, answer=null )</declarations>
+      <factHandleIds>1</factHandleIds>
     </org.drools.core.audit.event.ActivationLogEvent>
   </events>
 </org.drools.core.audit.WorkingMemoryLog>

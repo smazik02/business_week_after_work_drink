@@ -1,6 +1,7 @@
 package com.sample
 
 import com.sample.DroolsTest.*;
+import javax.swing.*;
 
 declare Question
 	content : String
@@ -10,16 +11,26 @@ end
 rule "init"
 	when
 	then
+		QuestionFrame.displayStartScreen();
+	
 		Question question = new Question();
 
 		question.setContent("Who are you going out for drinks with?");
-		String[] possible = {"Your boss", "A colleague", "A group", "A client or business contact"};
-
-		String selectedValue=QuestionFrame.displayQuestion(possible, question.getContent());
-		question.setAnswer(selectedValue);
+		question.setAnswer(" ");
+		
 		insert(question);
 end
 
+rule "askDrinks"
+	when
+		$question: Question(content == "Who are you going out for drinks with?", answer == " ")
+	then
+		String[] possible = {"Your boss", "A colleague", "A group", "A client or business contact"};
+
+		String selectedValue=QuestionFrame.displayQuestion(possible, $question.getContent());
+		$question.setAnswer(selectedValue);
+		update($question);
+end
 
 rule "didBossAskForDrinks"
 	when
@@ -600,22 +611,22 @@ rule "notInTheOffice"
 		Question(content == "Are you asking for a raise?", answer == "Yes") or
 		Question(content == "Just a promotion?", answer == "Yes")
 	then
-		QuestionFrame.displaySummary("STOP\nDo this in the office");
+		QuestionFrame.displaySummary("STOP! Do this in the office", JOptionPane.WARNING_MESSAGE);
 end
 
 rule "lifeNotLying"
     when
         Question(content == "Do you have a life?", answer == "No")
     then
-        QuestionFrame.displaySummary("STOP\nGet a life");
+        QuestionFrame.displaySummary("STOP! Get a life", JOptionPane.WARNING_MESSAGE);
 end
 
 rule "lifeLying"
     when
         Question(content == "Do you have a life?", answer == "Yes")
     then
-    	QuestionFrame.displaySummary("You aren't being honest. Try again");
-        QuestionFrame.displaySummary("STOP\nGet a life");
+    	QuestionFrame.displaySummary("You aren't being honest. Try again", JOptionPane.WARNING_MESSAGE);
+        QuestionFrame.displaySummary("STOP! Get a life", JOptionPane.WARNING_MESSAGE);
 end
 
 rule "FancyCocktail"
@@ -627,7 +638,7 @@ rule "FancyCocktail"
         Question(content == "Is your expense account big?", answer == "No") or
         Question(content == "Do you feel obligated to keep up with this person?", answer == "No")
     then
-        QuestionFrame.displaySummary("You should get a Fancy Cocktail!");
+        QuestionFrame.displaySummary("You should order a fancy cocktail!");
 end
 
 
@@ -640,7 +651,7 @@ rule "Martini"
         Question(content == "Is he or she a crier?", answer == "Yes") or
         Question(content == "Do you have to take them to dinner after?", answer == "Yes")
     then
-        QuestionFrame.displaySummary("You should get Martini!");
+        QuestionFrame.displaySummary("You should order Martini!");
 end
 
 
@@ -653,7 +664,7 @@ rule "Wine"
         Question(content == "Can this person handle the truth?", answer == "Yes") or
         Question(content == "Are they Mormon?", answer == "No")
     then
-        QuestionFrame.displaySummary("You should get Martini!");
+        QuestionFrame.displaySummary("You should order wine!");
 end
 
 rule "Beer"
@@ -663,7 +674,7 @@ rule "Beer"
         Question(content == "Can you write this off?", answer == "No") or
         Question(content == "Will this morph into a bitchfest?", answer == "Yes")
     then
-        QuestionFrame.displaySummary("You should get a beer!");
+        QuestionFrame.displaySummary("You should order a beer!");
 end
 
 rule "Bubbly"
@@ -672,7 +683,7 @@ rule "Bubbly"
         Question(content == "Are you planning on working here for a long time?", answer == "Yes") or
         Question(content == "Do you like this person?", answer == "Yes")
     then
-        QuestionFrame.displaySummary("You should get a bubbly drink!");
+        QuestionFrame.displaySummary("You should order a bubbly drink!");
 end
 
 
@@ -682,7 +693,7 @@ rule "Highball"
         Question(content == "Do you feel obligated to keep up with this person?", answer == "Yes") or
         Question(content == "Is it a major celebration?", answer == "No")
     then
-        QuestionFrame.displaySummary("You should get a Highball!");
+        QuestionFrame.displaySummary("You should order a Highball!");
 end
 
 
@@ -692,7 +703,7 @@ rule "Lowball"
         Question(content == "Is this a performance warning?", answer == "No") or
         Question(content == "Can you write this off?", answer == "Yes")
     then
-        QuestionFrame.displaySummary("You should get a Lowball!");
+        QuestionFrame.displaySummary("You should order a Lowball!");
 end
 
 
@@ -702,5 +713,5 @@ rule "Non-alcoholic"
         Question(content == "Is he or she trying to sleep with you?", answer == "Yes") or
         Question(content == "Are they Mormon?", answer == "Yes")
     then
-        QuestionFrame.displaySummary("You should get a Non-alcoholic!");
+        QuestionFrame.displaySummary("You should order a non-alcoholic drink!");
 end
